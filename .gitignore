@@ -1,7 +1,7 @@
 # Build and Release Folders
 .browserslistrc
 .editorconfig
-.eslintrc.js
+#.eslintrc.js
 babel.config.js
 dist.zip
 package-lock.json
