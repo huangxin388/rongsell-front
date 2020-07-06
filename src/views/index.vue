@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <HeaderAll></HeaderAll>
-    <IndexMain></IndexMain>
+    <router-view/>
     <FooterAll></FooterAll>
   </div>
 </template>
@@ -9,14 +9,14 @@
 <script>
 import HeaderAll from '../components/HeaderAll'
 import FooterAll from '../components/FooterAll'
-import IndexMain from '../components/IndexMain'
 export default {
   data () {
-    //
+    return {
+      //
+    }
   },
   components: {
     HeaderAll,
-    IndexMain,
     FooterAll
   }
 
