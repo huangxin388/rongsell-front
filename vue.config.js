@@ -10,10 +10,15 @@ module.exports = {
   devServer: {
     open: process.platform === 'darwin',
     host: '0.0.0.0',
-    port: 8080,
+    port: 8088,
     https: false,
     hotOnly: false,
-    proxy: null, // 设置代理
+    // proxy: {
+    //   '/rongsell': {
+    //     target: 'http://127.0.0.1:8080/rongsell',
+    //     changeOrigin: true
+    //   }
+    // },
     before: app => {}
   },
   // 第三方插件配置
