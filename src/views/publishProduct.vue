@@ -36,7 +36,7 @@
 
 </style>
 <script>
-import categoryApi from '@/api/category.js'
+import groupApi from '@/api/spec_group.js'
 import productApi from '@/api/product.js'
 export default {
   mounted () {
@@ -53,7 +53,7 @@ export default {
           const params = {
             parentId: node.value
           }
-          categoryApi.getParallelChildrenCategory(params).then(res => {
+          groupApi.getParallelChildrenGroup(params).then(res => {
             let nodes
             if (res.data.code === 0) {
               nodes = Array.from(res.data.data)
@@ -75,7 +75,7 @@ export default {
     },
     loadSkuInfo (id) {
       const params = {
-        categoryId: id
+        spgId: id
       }
       productApi.getSpuInfo(params).then(res => {
         if (res.data.code === 0) {
