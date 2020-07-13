@@ -53,7 +53,7 @@ const routes = [
         component: () => import('../views/publishProduct.vue')
       },
       {
-        path: 'editProductInfo:id',
+        path: 'editProductInfo:spgId:skuId',
         name: 'editProductInfo',
         component: () => import('../views/editProductInfo.vue')
       },

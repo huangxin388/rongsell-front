@@ -2,18 +2,18 @@
   <div class="publish-container">
       <p>选择分类</p>
       <el-cascader :props="props" @change="handleChange"></el-cascader>
-      <p>选择产品</p>
-      <div>
-        <el-select v-model="product" placeholder="请选择">
-          <el-option
-            v-for="item in spus"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </div>
-      <el-button :disabled="product === ''" type="primary" @click="skipToDetail">下一步，发布商品</el-button>
+<!--      <p>选择品牌</p>-->
+<!--      <div>-->
+<!--        <el-select v-model="product" placeholder="请选择">-->
+<!--          <el-option-->
+<!--            v-for="item in spus"-->
+<!--            :key="item.value"-->
+<!--            :label="item.label"-->
+<!--            :value="item.value">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </div>-->
+      <el-button :disabled="spgId === ''" type="primary" @click="skipToDetail">下一步，发布商品</el-button>
   </div>
 </template>
 <style scoped>
@@ -37,15 +37,10 @@
 </style>
 <script>
 import groupApi from '@/api/spec_group.js'
-import productApi from '@/api/product.js'
 export default {
-  mounted () {
-    console.log('id')
-    console.log(this.product)
-  },
   data () {
     return {
-      product: '',
+      spgId: '',
       spus: [],
       props: {
         lazy: true,
@@ -71,24 +66,26 @@ export default {
   },
   methods: {
     handleChange (value) {
-      this.loadSkuInfo(value[value.length - 1])
+      // this.loadSpuInfo(value[value.length - 1])
+      console.log(value[value.length - 1])
+      this.spgId = value[value.length - 1]
     },
-    loadSkuInfo (id) {
-      const params = {
-        spgId: id
-      }
-      productApi.getSpuInfo(params).then(res => {
-        if (res.data.code === 0) {
-          this.spus = Array.from(res.data.data)
-            .map(item => ({
-              value: item.id,
-              label: item.title
-            }))
-        }
-      })
-    },
+    // loadSpuInfo (id) {
+    //   const params = {
+    //     spgId: id
+    //   }
+    //   productApi.getSpuInfo(params).then(res => {
+    //     if (res.data.code === 0) {
+    //       this.spus = Array.from(res.data.data)
+    //         .map(item => ({
+    //           value: item.id,
+    //           label: item.title
+    //         }))
+    //     }
+    //   })
+    // },
     skipToDetail () {
-      this.$router.push({ name: 'editProductInfo', params: { id: this.product } })
+      this.$router.push({ name: 'editProductInfo', params: { spgId: this.spgId, skuId: '' } })
     }
   }
 }

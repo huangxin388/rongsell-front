@@ -110,7 +110,7 @@
               <img :src="item.imageHost + item.mainImage"/>
               <!--            <img src="../assets/xie.webp"/>-->
             </div>
-            <p class="product-name"><span><img src="../assets/baoyou.png"/> </span>{{item.name}}</p>
+            <p class="product-name"><span><img src="../assets/baoyou.png"/> </span>{{item.title}}</p>
             <div>
               <span class="product-comment">评价 143</span>
               <span class="product-collection">收藏 5566</span>
@@ -466,6 +466,7 @@
 </style>
 <script>
 import api from '@/api/product'
+import skuApi from '@/api/sku'
 import categoryApi from '@/api/category.js'
 export default {
   data () {
@@ -496,11 +497,10 @@ export default {
     getProductList () {
       const params = {
         keyword: '',
-        categoryId: '',
         pageNum: '1',
         pageSize: '10'
       }
-      api.getProductList(params).then(res => {
+      skuApi.getSkuList(params).then(res => {
         const data = res.data
         if (data.code === 0) {
           this.productList = data.data.list
@@ -512,7 +512,6 @@ export default {
         parentId: 0
       }
       categoryApi.getParallelChildrenCategory(params).then(res => {
-        console.log(res.data)
         if (res.data.code === 0) {
           this.firstLevelCategoryList = res.data.data
         }

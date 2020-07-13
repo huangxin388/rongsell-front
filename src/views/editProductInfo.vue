@@ -113,9 +113,10 @@ export default {
     this.imageMap = new Map()
   },
   mounted () {
-    console.log(this.$route.params.id)
-    this.spuId = this.$route.params.id
-    this.getSpuInfo(this.$route.params.id)
+    console.log('spgId' + this.$route.params.spgId)
+    console.log('skuId' + this.$route.params.skuId)
+    this.spuId = this.$route.params.spgId
+    this.getSkuParams(this.$route.params.spgId)
     // 初始化富文本编辑器
     if (!this.editor) {
       this.editor = new E(this.$refs.editor)
@@ -172,19 +173,19 @@ export default {
     }
   },
   methods: {
-    getSpuInfo (spuId) {
-      const params = {
-        id: spuId
-      }
-      productApi.getSpuInfo(params).then(res => {
-        if (res.data.code === 0) {
-          this.spu = res.data.data[0]
-          console.log(this.spu)
-          this.getSpuParams(this.spu.spgId)
-        }
-      })
-    },
-    getSpuParams (gId) {
+    // getSpuInfo (spuId) {
+    //   const params = {
+    //     id: spuId
+    //   }
+    //   productApi.getSpuInfo(params).then(res => {
+    //     if (res.data.code === 0) {
+    //       this.spu = res.data.data[0]
+    //       console.log(this.spu)
+    //       this.getSpuParams(this.spu.spgId)
+    //     }
+    //   })
+    // },
+    getSkuParams (gId) {
       const params = {
         groupId: gId
       }

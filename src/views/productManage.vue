@@ -5,7 +5,7 @@
       <div class="product-item">
         <img :src="item.imageHost + item.mainImage" />
         <div class="cart-content-middle">
-          <p class="cart-item-name">{{item.name}}</p>
+          <p class="cart-item-name">{{item.title}}</p>
           <p class="cart-item-info"><span>商品状态:</span>{{item.status}}</p>
         </div>
         <div class="change-status">
@@ -83,7 +83,7 @@
   }
 </style>
 <script>
-import api from '../api/product'
+import skuApi from '../api/sku'
 import ProductForm from './productForm'
 export default {
   created () {
@@ -110,19 +110,32 @@ export default {
       this.dialogVisible = true
     },
     editProduct (id) {
-      this.dialogTitle = '编辑商品'
-      this.dialogVisible = true
-      // dialog中的内容是懒加载的，虽然ElementUI中说需要在open事件中回调，但调用子组件方法的时候依然没有初始化完成。所以延时10毫秒
-      setTimeout(() => {
-        this.$refs.dialogForm.loadProductInfo(id)
-      }, 10)
+      console.log('编辑商品')
+      console.log('id = ' + id)
+      const params = {
+        skuId: id
+      }
+      // 首先通过skuid找到此商品对应的spu，获取spgid
+      skuApi.manageGetSkuById(params).then(res => {
+        console.log(res)
+        if (res.data.code === 0) {
+          console.log(res.data.data)
+        }
+      })
+      // 通过spgid和skuid进入添加编辑商品界面
+      // this.dialogTitle = '编辑商品'
+      // this.dialogVisible = true
+      // // dialog中的内容是懒加载的，虽然ElementUI中说需要在open事件中回调，但调用子组件方法的时候依然没有初始化完成。所以延时10毫秒
+      // setTimeout(() => {
+      //   this.$refs.dialogForm.loadProductInfo(id)
+      // }, 10)
     },
     changeProductStatus (id, status) {
       const params = {
         productId: id,
         status: status
       }
-      api.changeProductStatus(params).then(res => {
+      skuApi.changeSkuStatus(params).then(res => {
         if (res.data.code === 0) {
           this.loadProductList()
         } else {
@@ -135,13 +148,12 @@ export default {
         pageNum: this.pagination.pageNum,
         pageSize: this.pagination.pageSize
       }
-      api.manageGetProductList(param).then(res => {
+      skuApi.manageGetSkuList(param).then(res => {
         if (res.data.code === 0) {
           this.productList = res.data.data.list
           this.pagination.pageNum = res.data.data.pageNum
           this.pagination.pageSize = res.data.data.pageSize
           this.pagination.total = res.data.data.total
-          console.log(res.data.data)
           this.productList.forEach(item => {
             if (item.status === 1) {
               item.status = '在售'
