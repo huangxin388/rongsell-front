@@ -465,7 +465,6 @@
 
 </style>
 <script>
-import api from '@/api/product'
 import skuApi from '@/api/sku'
 import categoryApi from '@/api/category.js'
 export default {
