@@ -32,6 +32,12 @@
           <span>请选择或直接输入主色，标准颜色可增加搜索/导购机会，还可填写颜色备注信息（偏深、偏亮等）！</span>
           <span>查看详情</span>
         </div>
+        <div v-for="item in saleParams" :key="item.id">
+          <p>{{ item.name }}</p>
+          <el-checkbox-group v-model="item.value" @change="checkBoxChange">
+            <el-checkbox :label="option.name" v-for="option in item.specParamList" :key="option.id"></el-checkbox>
+          </el-checkbox-group>
+        </div>
         <div>
           <el-form :model="ruleForm" :rules="rules" ref="ruleForms" label-width="100px" class="demo-ruleForm">
             <el-form-item label="一口价" prop="price">
@@ -117,6 +123,7 @@ export default {
     console.log('skuId' + this.$route.params.skuId)
     this.spuId = this.$route.params.spgId
     this.getSkuParams(this.$route.params.spgId)
+    this.getSaleParams(this.$route.params.spgId)
     // 初始化富文本编辑器
     if (!this.editor) {
       this.editor = new E(this.$refs.editor)
@@ -141,6 +148,7 @@ export default {
       }, 300)
     }
     return {
+      checkList: [],
       spuId: '',
       subTitle: '', // 商品副标题
       subImages: '', // 以字符串形式存储的商品图片数组
@@ -166,6 +174,7 @@ export default {
         ]
       },
       paramSelections: [], // 商品参数单选框
+      saleParams: [], // 商品的销售参数，如颜色，尺码等
       params: {}, // 上传商品信息时商品的实际参数信息
       uploaderImageList: [], // 图片上传控件需要特殊格式的url列表
       dialogImageUrl: '', // 图片预览地址
@@ -185,6 +194,10 @@ export default {
     //     }
     //   })
     // },
+    /**
+     * 获取商品参数
+     * @param gId
+     */
     getSkuParams (gId) {
       const params = {
         groupId: gId
@@ -192,10 +205,34 @@ export default {
       productApi.getSpuParams(params).then(res => {
         if (res.data.code === 0) {
           this.paramSelections = res.data.data
-          console.log('params')
-          console.log(this.paramSelections)
         }
       })
+    },
+    /**
+     * 获取商品销售参数
+     * @param gId
+     */
+    getSaleParams (gId) {
+      const params = {
+        groupId: gId
+      }
+      productApi.getSaleParams(params).then(res => {
+        if (res.data.code === 0) {
+          console.log('params')
+          console.log(res.data.data)
+          this.saleParams = res.data.data
+          this.saleParams.forEach(item => {
+            item.value = []
+          })
+        }
+      })
+    },
+    /**
+     * 销售方案复选框发生改变时触发
+     */
+    checkBoxChange (value) {
+      console.log('复选框变化了')
+      console.log('更新后的值' + value)
     },
     validateSubmit (formName) {
       this.$refs[formName].validate((valid) => {

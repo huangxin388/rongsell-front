@@ -13,6 +13,9 @@ export default {
   manageGetSkuById (params) { // 管理员根据id获取商品详情
     return fetchPost('/manage/sku/getskubyid', params)
   },
+  testResolve (params) {
+    return fetchPost('/sku/testresolve', params)
+  },
   saveOrUpdateProduct (params) { // 管理员添加或编辑商品信息
     return fetchPost('/manage/product/productsave', params)
   },

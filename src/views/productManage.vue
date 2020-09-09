@@ -88,12 +88,19 @@ import ProductForm from './productForm'
 export default {
   created () {
     this.loadProductList()
+    this.resolve()
+    this.resultMap = new Map()
+    // const testList = []
+    // testList.push({ name: '小明' })
+    // testList.push({ name: '小明', age: 7 })
+    // console.log(testList)
   },
   data () {
     return {
       dialogVisible: false,
       dialogTitle: '',
       productList: [],
+      skuList: [],
       pagination: {
         total: 0,
         pageNum: 1,
@@ -102,6 +109,36 @@ export default {
     }
   },
   methods: {
+    resolve () {
+      skuApi.testResolve(null).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data)
+          this.skuList = res.data.data
+          // 每个sku的参数列表数组
+          const parammeterList = []
+          this.skuList.forEach(item => {
+            parammeterList.push(item.param)
+            // console.log(item.param)
+          })
+          // 首先获取该数组中每个对象的键值，也就是下面循环中的key
+          const obj = parammeterList[0]
+          for (const key in obj) {
+            // 属性数组，用于存储参数列表数组中每个对象，相同属性的不同值
+            const attributeList = []
+            // 遍历参数列表数组，如果如果对象中的该属性不存在于此属性对应的属性数组中则将其加入属性数组
+            parammeterList.forEach(item => {
+              if (attributeList.indexOf(item[key]) === -1) {
+                attributeList.push(item[key])
+              }
+            })
+            // 最后将属性及属性数组存入一个map中
+            this.resultMap.set(key, attributeList)
+          }
+          console.log('结果')
+          console.log(this.resultMap)
+        }
+      })
+    },
     closeDialog () {
       this.dialogVisible = false
     },
