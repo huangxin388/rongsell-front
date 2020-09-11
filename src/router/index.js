@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/index.vue'
-import AddProduct from '../views/productForm'
+import AddProduct from '../views/manage/productForm'
 import Login from '../views/login'
 import IndexMain from '../components/IndexMain'
 import ProductDetail from '../views/productDetail'
@@ -37,20 +37,20 @@ const routes = [
   },
   {
     path: '/managePage',
-    component: () => import('../views/manage.vue'),
+    component: () => import('../views/manage/manage.vue'),
     // redirect: '/managePage/product',
     children: [
       {
         path: 'category',
-        component: () => import('../views/categoryManage.vue')
+        component: () => import('../views/manage/categoryManage.vue')
       },
       {
         path: 'product',
-        component: () => import('../views/productManage.vue')
+        component: () => import('../views/manage/productManage.vue')
       },
       {
         path: 'publishProduct',
-        component: () => import('../views/publishProduct.vue')
+        component: () => import('../views/manage/publishProduct.vue')
       },
       {
         path: 'editProductInfo:spgId:skuId',
@@ -59,7 +59,7 @@ const routes = [
       },
       {
         path: 'order',
-        component: () => import('../views/orderManage.vue')
+        component: () => import('../views/manage/orderManage.vue')
       }
     ]
   },

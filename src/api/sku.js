@@ -31,7 +31,7 @@ export default {
   getSpuParams (params) { // 获取产品参数
     return fetchPost('/manage/specparam/getspecparam', params)
   },
-  submitProduct (params) { // 提交商品信息
-    return fetchPost('/manage/sku/skusave', params)
+  submitSpuInfo (params) { // 提交商品信息
+    return fetchPost('/manage/spu/spusave', params)
   }
 }

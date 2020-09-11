@@ -199,8 +199,8 @@
   }
 </style>
 <script>
-import HeaderAll from '../components/HeaderAll'
-import FooterAll from '../components/FooterAll'
+import HeaderAll from '../../components/HeaderAll'
+import FooterAll from '../../components/FooterAll'
 export default {
   data () {
     return {

@@ -65,7 +65,7 @@
         <div>
           <el-upload
             ref="imageUploader"
-            action="http://localhost:8080/manage/product/uploadimage"
+            :action="this.uploadImagePath"
             list-type="picture-card"
             :http-request="handleUpload"
             :on-preview="handlePictureCardPreview"
@@ -111,6 +111,7 @@
   }
 </style>
 <script>
+import { baseURL } from '@/utils/http.js'
 import productApi from '@/api/product.js'
 import fileApi from '@/api/file'
 import E from 'wangeditor'
@@ -119,11 +120,12 @@ export default {
     this.imageMap = new Map()
   },
   mounted () {
+    this.uploadImagePath = baseURL + '/manage/product/uploadimage'
     console.log('spgId' + this.$route.params.spgId)
-    console.log('skuId' + this.$route.params.skuId)
-    this.spuId = this.$route.params.spgId
-    this.getSkuParams(this.$route.params.spgId)
-    this.getSaleParams(this.$route.params.spgId)
+    console.log('skuId' + this.$route.params.skuId) // 跳转时没传，肯定是空的，留作编辑商品信息时用
+    this.spgId = this.$route.params.spgId // 后端分类id
+    this.getSkuParams(this.spgId)
+    this.getSaleParams(this.spgId)
     // 初始化富文本编辑器
     if (!this.editor) {
       this.editor = new E(this.$refs.editor)
@@ -148,8 +150,9 @@ export default {
       }, 300)
     }
     return {
+      uploadImagePath: '',
       checkList: [],
-      spuId: '',
+      spgId: '',
       subTitle: '', // 商品副标题
       subImages: '', // 以字符串形式存储的商品图片数组
       imageList: [], // subImages的数组形式
@@ -257,7 +260,7 @@ export default {
       // 富文本信息
       this.detail = this.editor.txt.html()
       const params = {
-        spuId: this.spuId,
+        spgId: this.spgId,
         title: this.ruleForm.title,
         subTitle: this.subTitle,
         subImages: this.subImages,
@@ -266,12 +269,12 @@ export default {
         param: this.params,
         detail: this.detail
       }
-      productApi.submitProduct(params).then(res => {
+      productApi.submitSpuInfo(params).then(res => {
         if (res.data.code === 0) {
           console.log(res.data.data)
           // 添加商品成功
           this.$message.success('操作成功')
-          this.$router.push({ path: '/managePage/product', params: { id: this.product } })
+          this.$router.push({ path: '/managePage/product' })
         }
       })
     },

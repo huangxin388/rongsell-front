@@ -83,7 +83,7 @@
   }
 </style>
 <script>
-import skuApi from '../api/sku'
+import skuApi from '../../api/sku'
 import ProductForm from './productForm'
 export default {
   created () {
