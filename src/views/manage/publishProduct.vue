@@ -1,4 +1,5 @@
 <template>
+<!--  ------------------------------------------发布商品的第一个界面----------------------------------------- -->
   <div class="publish-container">
       <p>选择分类</p>
       <el-cascader :props="props" @change="handleChange"></el-cascader>
@@ -66,24 +67,9 @@ export default {
   },
   methods: {
     handleChange (value) {
-      // this.loadSpuInfo(value[value.length - 1])
       console.log(value[value.length - 1])
       this.spgId = value[value.length - 1]
     },
-    // loadSpuInfo (id) {
-    //   const params = {
-    //     spgId: id
-    //   }
-    //   productApi.getSpuInfo(params).then(res => {
-    //     if (res.data.code === 0) {
-    //       this.spus = Array.from(res.data.data)
-    //         .map(item => ({
-    //           value: item.id,
-    //           label: item.title
-    //         }))
-    //     }
-    //   })
-    // },
     skipToDetail () {
       this.$router.push({ name: 'editProductInfo', params: { spgId: this.spgId, skuId: '' } })
     }

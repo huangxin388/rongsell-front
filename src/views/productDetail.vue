@@ -290,7 +290,7 @@
   }
 </style>
 <script>
-import api from '@/api/product'
+import api from '@/api/spu'
 export default {
   mounted () {
     console.log(this.$route.params.id)

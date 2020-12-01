@@ -41,7 +41,7 @@
 </template>
 <style></style>
 <script>
-import api from '@/api/product'
+import api from '@/api/spu'
 import fileApi from '@/api/file'
 import E from 'wangeditor'
 export default {

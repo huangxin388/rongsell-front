@@ -55,7 +55,7 @@ const routes = [
       {
         path: 'editProductInfo:spgId:skuId',
         name: 'editProductInfo',
-        component: () => import('../views/editProductInfo.vue')
+        component: () => import('../views/manage/editProductInfo.vue')
       },
       {
         path: 'order',

@@ -24,7 +24,7 @@
               <div class="cart-product-item row-item">
                 <div class="item-img">
                   <el-checkbox v-model="isChecked" style="margin-left:10px;"/>
-                  <img src="../assets/xie.webp" />
+                  <img :src="imageHost + item.productMainImage" />
                 </div>
               </div>
               <div class="cart-product-item row-item product-info">
@@ -303,12 +303,12 @@ export default {
       console.log(value)
     },
     countDecrease (item) {
-      if (item.count > 1) {
-        item.count--
+      if (item.quantity > 1) {
+        item.quantity--
       }
     },
     countIncrease (item) {
-      item.count++
+      item.quantity++
     },
     isChecked () {
       return this.test !== 0

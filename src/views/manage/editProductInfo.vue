@@ -1,4 +1,5 @@
 <template>
+<!--  ------------------------------------------添加商品时的详情界面----------------------------------------------- -->
   <div class="edit-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -112,7 +113,7 @@
 </style>
 <script>
 import { baseURL } from '@/utils/http.js'
-import productApi from '@/api/product.js'
+import spuApi from '@/api/spu.js'
 import fileApi from '@/api/file'
 import E from 'wangeditor'
 export default {
@@ -185,18 +186,6 @@ export default {
     }
   },
   methods: {
-    // getSpuInfo (spuId) {
-    //   const params = {
-    //     id: spuId
-    //   }
-    //   productApi.getSpuInfo(params).then(res => {
-    //     if (res.data.code === 0) {
-    //       this.spu = res.data.data[0]
-    //       console.log(this.spu)
-    //       this.getSpuParams(this.spu.spgId)
-    //     }
-    //   })
-    // },
     /**
      * 获取商品参数
      * @param gId
@@ -205,7 +194,7 @@ export default {
       const params = {
         groupId: gId
       }
-      productApi.getSpuParams(params).then(res => {
+      spuApi.getSpuParams(params).then(res => {
         if (res.data.code === 0) {
           this.paramSelections = res.data.data
         }
@@ -219,7 +208,7 @@ export default {
       const params = {
         groupId: gId
       }
-      productApi.getSaleParams(params).then(res => {
+      spuApi.getSaleParams(params).then(res => {
         if (res.data.code === 0) {
           console.log('params')
           console.log(res.data.data)
@@ -269,7 +258,7 @@ export default {
         param: this.params,
         detail: this.detail
       }
-      productApi.submitSpuInfo(params).then(res => {
+      spuApi.submitSpuInfo(params).then(res => {
         if (res.data.code === 0) {
           console.log(res.data.data)
           // 添加商品成功

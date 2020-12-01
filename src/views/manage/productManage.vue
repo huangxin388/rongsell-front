@@ -1,6 +1,6 @@
 <template>
+<!--  ---------------------------------------------商品管理--------------------------------------------- -->
   <div>
-    <el-button @click="addProduct">添加商品</el-button>
     <div class="product-container" v-for="item in productList" :key="item.id">
       <div class="product-item">
         <img :src="item.imageHost + item.mainImage" />
@@ -90,10 +90,6 @@ export default {
     this.loadProductList()
     this.resolve()
     this.resultMap = new Map()
-    // const testList = []
-    // testList.push({ name: '小明' })
-    // testList.push({ name: '小明', age: 7 })
-    // console.log(testList)
   },
   data () {
     return {
@@ -118,7 +114,6 @@ export default {
           const parammeterList = []
           this.skuList.forEach(item => {
             parammeterList.push(item.param)
-            // console.log(item.param)
           })
           // 首先获取该数组中每个对象的键值，也就是下面循环中的key
           const obj = parammeterList[0]
@@ -139,13 +134,16 @@ export default {
         }
       })
     },
+    /**
+     * 关闭弹出框
+     */
     closeDialog () {
       this.dialogVisible = false
     },
-    addProduct () {
-      this.dialogTitle = '添加商品'
-      this.dialogVisible = true
-    },
+    /**
+     * 修改商品信息
+     * @param id
+     */
     editProduct (id) {
       console.log('编辑商品')
       console.log('id = ' + id)
@@ -157,16 +155,15 @@ export default {
         console.log(res)
         if (res.data.code === 0) {
           console.log(res.data.data)
+          this.dialogVisible = true
         }
       })
-      // 通过spgid和skuid进入添加编辑商品界面
-      // this.dialogTitle = '编辑商品'
-      // this.dialogVisible = true
-      // // dialog中的内容是懒加载的，虽然ElementUI中说需要在open事件中回调，但调用子组件方法的时候依然没有初始化完成。所以延时10毫秒
-      // setTimeout(() => {
-      //   this.$refs.dialogForm.loadProductInfo(id)
-      // }, 10)
     },
+    /**
+     * 商品上下架及删除
+     * @param id
+     * @param status
+     */
     changeProductStatus (id, status) {
       const params = {
         productId: id,
@@ -180,6 +177,9 @@ export default {
         }
       })
     },
+    /**
+     * 加载商品列表
+     */
     loadProductList () {
       const param = {
         pageNum: this.pagination.pageNum,
@@ -205,10 +205,17 @@ export default {
         }
       })
     },
+    /**
+     * 弹出框中的回调方法 // TODO 待删除或修改
+     */
     submitForm () {
       console.log('点击了提交按钮')
       this.$refs.dialogForm.onEditProduct()
     },
+    /**
+     * 翻页
+     * @param currentPage
+     */
     currentPageChange (currentPage) {
       this.pagination.pageNum = currentPage
       this.loadProductList()

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import qs from 'qs'
 
-export const baseURL = 'http://127.0.0.1:8080/rongsell'
+// export const baseURL = 'http://127.0.0.1:8080/rongsell'
 // export const baseURL = 'http://ykfrsh.natappfree.cc/rongsell'
-// export const baseURL = 'http://116.62.50.7/rongsell'
+export const baseURL = 'http://116.62.50.7/rongsell'
 // 配置axios
 export const axiosInstance = axios.create({
   baseURL: baseURL,
